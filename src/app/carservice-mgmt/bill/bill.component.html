@@ -1,0 +1,139 @@
+<app-header></app-header>
+<!-- ---------------------------BILL REPORT-------------------------- -->
+
+<div class="billReport" *ngIf="router.url=='/bill/billReport'">
+  <div class="container mt-5">
+    <h3 class="text-center mb-5">Bill Reports</h3>
+    <div class="text-center">
+      <table class="table table-responsive table-hover table-bordered ">
+        <thead style=" background-color:rgb(74,80,110);" class="text-white">
+          <tr>
+            <th>Bill Id</th>
+            <th>PickUpId</th>
+            <th>EmailUser</th>
+            <th>Date</th>
+            <th>BillAmount</th>
+            <th>BillDescription</th>
+          </tr>
+        </thead>
+        <tbody class="bg-light">
+          <tr *ngFor="let bill of billList">
+            <td style="color:rgb(74,80,110);" class="font-weight-bold">{{bill.id}}</td>
+            <td>{{bill.pickUpId}}</td>
+            <td>{{bill.emailUser}}</td>
+            <td>{{bill.date}}</td>
+            <td>{{bill.billAmount}}</td>
+            <td>{{bill.billDescription}}</td>
+          <tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-----------------------------------------GENERATE BILL---------------------------------------------->
+
+
+<div class="generateBill" *ngIf="router.url=='/bill/generateBill'">
+
+  <div class="container-fluid ">
+    <div class="border-primary">
+      <h3 class="text-center mb-5 mt-5">Generate Bill</h3>
+      <div class="row">
+        <form [formGroup]="generateBill" (ngSubmit)="onAddBillSubmit()" style="border: solid" class="mx-auto my-auto pl-5">
+          <input type="text" class="form-control" formControlName="emailUser" #emailUser style="display:none" />
+
+          <input type="text" class="form-control" formControlName="dealerEmail" #dealerEmail style="display:none" />
+
+          <div class="row form-group input-group mt-5">
+            <div class="col-md col-12"><label for="pickUpId">PickUpId</label></div>
+            <div class="col-md col-12">
+              <select class="form-control" #pickUpId formControlName="pickUpId">
+                <option *ngFor="let bill of billOptions" [value]=bill.id>{{bill.id}}</option>
+              </select>
+            </div>
+          </div>
+
+
+          <div class="row form-group input-group">
+            <div class="col-md col-12"><label for="date">Date</label></div>
+            <div class="col-md col-12">
+              <input type="date" class="form-control" formControlName="date" #date />
+            </div>
+          </div>
+          <div class="row mb-3 form-group ">
+            <div class="col text-warning" *ngIf="generateBill.get('date').hasError('required') && generateBill.get('date').touched">
+              Date is required
+            </div>
+          </div>
+
+          <div class="row form-group input-group">
+            <div class="col-md col-12"><label for="billAmount">BillAmount</label></div>
+            <div class="col-md col-12">
+              <input type="text" placeholder="BillAmount" class="form-control" formControlName="billAmount" #billAmount />
+            </div>
+          </div>
+          <div class="row mb-3 form-group ">
+            <div class="col text-warning" *ngIf="generateBill.get('billAmount').hasError('required') && generateBill.get('billAmount').touched">
+              BillAmount is required
+            </div>
+          </div>
+
+          <div class="row form-group input-group">
+            <div class="col-md col-12"><label for="billDescription">BillDescription</label></div>
+            <div class="col-md col-12">
+              <input type="text" placeholder="BillDescription" class="form-control" formControlName="billDescription"
+                #billDescription>
+            </div>
+          </div>
+          <div class="row mb-3 form-group ">
+            <div class="col text-warning" *ngIf="generateBill.get('billDescription').hasError('required') && generateBill.get('billDescription').touched">
+              BillDescription is required
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col form-group">
+              <button type="submit" class="btn text-white mx-auto">Save Bill</button>
+            </div>
+          </div>
+
+          <input type="text" class="form-control" formControlName="id" #id style="display:none" />
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- =================================================================== -->
+<div class="billReport" *ngIf="router.url=='/bill/myBill'">
+  <div class="container mt-5">
+    <h3 class="text-center mb-5">Bill Reports</h3>
+    <div class="text-center">
+      <table class="table table-responsive table-hover table-bordered ">
+        <thead style=" background-color:rgb(74,80,110);" class="text-white">
+          <tr>
+            <th>Bill Id</th>
+            <th>PickUpId</th>
+            <th>DealerEmail</th>
+            <th>Date</th>
+            <th>BillAmount</th>
+            <th>BillDescription</th>
+          </tr>
+        </thead>
+        <tbody class="bg-light">
+          <tr *ngFor="let bill of myBill">
+            <td style="color:rgb(74,80,110);" class="font-weight-bold">{{bill.id}}</td>
+            <td>{{bill.pickUpId}}</td>
+            <td>{{bill.dealerEmail}}</td>
+            <td>{{bill.date}}</td>
+            <td>{{bill.billAmount}}</td>
+            <td>{{bill.billDescription}}</td>
+          <tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

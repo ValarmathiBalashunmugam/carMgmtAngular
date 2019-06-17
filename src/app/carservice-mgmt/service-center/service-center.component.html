@@ -1,0 +1,86 @@
+<app-header></app-header>
+<!-- ================================CENTER REPORT======================================= -->
+<div class="CenterReport" *ngIf=showCenterReport>
+  <section class="container mt-5 text-center">
+      <h3 class="text-center">Center Report</h3>
+      <table class="table table-responsive table-hover table-bordered mt-5">
+        <tbody class="text-white tbody">
+          <tr>
+            <td class="color">Service Center Name</td>
+            <td>{{center.serviceCenterName}}</td>
+          </tr>
+          <tr>
+            <td class="color">DealerName</td>
+            <td>{{center.dealerName}}</td>
+          </tr>
+          <tr>
+            <td class="color">Contact Number</td>
+            <td>{{center.mobile}}</td>
+          </tr>
+          <tr>
+            <td class="color">Email</td>
+            <td>{{center.email}}</td>
+          </tr>
+          <tr>
+            <td class="color">Pincode</td>
+            <td>{{center.pincode}}</td>
+          </tr>
+          <tr>
+            <td class="color">City</td>
+            <td>{{center.city}}</td>
+          </tr>
+          <tr>
+            <td class="color">State</td>
+            <td>{{center.state}}</td>
+          </tr>
+          <tr>
+            <td class="color">Address</td>
+            <td>{{center.address}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="controls mt-3 text-center">
+        <a class="btn bg-color text-white" (click)="showPickUpForm(center.email)" *ngIf="authService.isUser()">Request for Service</a>
+      </div>
+    </section>
+    
+</div>
+
+<!-- ===============================SERVICE CENTERS LIST===========================-->
+
+<div class="serviceCenters"  *ngIf="router.url=='/serviceCenter/centerList' && showCenterList">
+  <h3 class="text-center mb-5">Service Centers</h3>
+  <div class="text-center">
+    <table class="table table-responsive table-hover table-bordered ">
+      <thead style=" background-color:rgb(74,80,110);" class="text-white">
+        <tr>
+          <th>Service Center Name</th>
+          <th>Dealer Name</th>
+          <th>Location</th>
+          <th>Contact Number</th>
+        </tr>
+      </thead>
+      <tbody class="bg-light">
+        <tr *ngFor="let center of serviceCenter" (click)="displayServiceCenter(center.email)">
+          <td style="color:rgb(74,80,110);" class="font-weight-bold">{{center.serviceCenterName}}</td>
+          <td>{{center.dealerName}}</td>
+          <td>{{center.address}},{{center.city}}</td>
+          <td>{{center.mobile}}</td>
+        <tr>
+      </tbody>
+    </table>
+    <!-- <div class=page>
+        <nav class="justify-content-center">
+            <ul class="pagination">
+              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+              <li class="page-item"><a class="page-link" (click)=page(0)>1</a></li>
+              <li class="page-item"><a class="page-link" (click)=page(1)>2</a></li>
+              <li class="page-item"><a class="page-link" (click)=page(2)>3</a></li>
+              <li class="page-item"><a class="page-link" (click)=page(3)>4</a></li>
+              <li class="page-item"><a class="page-link" (click)=page(4)>5</a></li>
+              <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+          </nav>
+    </div> -->
+  </div>
+</div>

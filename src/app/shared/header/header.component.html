@@ -1,0 +1,61 @@
+<nav class="navbar navbar-expand-sm navbar-light mb-3 color">
+  <div class="container-fluid">
+    <a class="navbar-brand  text-white">Car Service Center<i class="fa fa-car pl-4  text-white" aria-hidden="true"></i></a>
+    <button class="navbar-toggler" #navbarToggler data-toggle="collapse" data-target="#navbarNav">
+      <span class="navbar-toggler-icon bg-white"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto" (click)="toggleNav($event)">
+
+
+        <li class="nav-item">
+          <a class="nav-link text-white" [routerLink]="['/welcome']">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" [routerLink]="['/service']" *ngIf=!authService.isLoggedIn()>Services</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" [routerLink]="['/login']" *ngIf=!authService.isLoggedIn()>LogIn</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" [routerLink]="['/about']" *ngIf=!authService.isLoggedIn()>About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" [routerLink]="['/dashboard']" *ngIf=authService.isLoggedIn()>Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" [routerLink]="['/serviceCenter/centerList']">Service Centers</a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link text-white" [routerLink]="['']" *ngIf=authService.isAdmin()>My Bill</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" [routerLink]="['/pickUp/myOrder']" *ngIf=authService.isUser()>My Orders</a>
+        </li> -->
+
+        <!-- <li class="nav-item dropdown" *ngIf=authService.isAdmin()>
+          <a class="nav-link menu-item dropdown-toggle text-white" data-toggle="dropdown" href="#" role="button"
+            aria-haspopup="true" aria-expanded="false">Reports</a>
+          <div class="dropdown dropdown-menu">
+            <a class="dropdown-item menu-item" [routerLink]="['/admin/customerReport']">Customer Report</a>
+            <a class="dropdown-item menu-item" [routerLink]="['/admin/pickUpReport']">PickUp Report</a>
+            <a class="dropdown-item menu-item" [routerLink]="['/admin/billReport']">Bill Report</a>
+          </div>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link text-white" [routerLink]="['/myAccount']" *ngIf=authService.isLoggedIn()>My Account</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" (click)=logout() *ngIf=authService.isLoggedIn()>Logout</a>
+        </li>
+
+        <!-- <li class="nav-item">
+          <a class="nav-link text-white" [routerLink]="['/admin/changePassword']" *ngIf=authService.isLoggedIn()>Change
+            Password</a>
+        </li> -->
+
+
+      </ul>
+    </div>
+  </div>
+</nav>

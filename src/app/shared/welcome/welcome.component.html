@@ -1,0 +1,538 @@
+<app-header></app-header>
+<!------------------------ WELCOME ------------------------------------------>
+
+
+<div class="Welcome" *ngIf="router.url == '/welcome'">
+  <div class="container-fluid pt-5 mt-5">
+    <div class="row justify-content-md-center pl-5 pt-5">
+      <h1 class="cols text-black pt-4" style="font-weight:800">Car Service Center</h1>
+    </div>
+    <div class="row justify-content-md-center pl-5">
+      <h2 class="cols text-black pb-4">Welcome to the state of independence!</h2>
+    </div>
+  </div>
+</div>
+
+
+<!------------------------ ABOUT US ------------------------------------------>
+
+<div class="AboutUs" *ngIf="router.url == '/about'">
+  <div class="container pt-5 text-dark text-justify mt-5 mb-3">
+    <div class="row justify-content-center">
+      <h3 style="font-weight:800;" class="pb-5">About us</h3>
+    </div>
+    <div class="row">
+      <p>The Car Service Center has emerged with solution of all car care services which is
+        available 24X7 just a click away. The system includes regular car service,
+        major car repair, washing & detailing or any kind of emergency car repair.</p>
+    </div>
+    <div class="row">
+      <p>The Car Service Center aims at making the car service and repair hassle free and time
+        efficient with their night service along with the facility of pick and drop
+        to make our customers’ life easy.</p>
+    </div>
+    <div class="row">
+      <p>We provide service to car owners and service providers through our tech-enabled mobile app & website.
+        It’s a STATE OF INDEPENDENCE for all the car owners.
+        The idea here is to make the whole experience of owning a car more beautiful!</p>
+    </div>
+  </div>
+</div>
+
+<!------------------------------------------------ LOGIN ------------------------------------------->
+<div class="login" *ngIf="router.url == '/login'">
+  <div class="container-fluid mt-5 text-white">
+    <div class="row">
+      <div class="form p-4 p-md-5 mx-auto my-auto">
+        <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+          <h2 class="text-center mb-5">Login</h2>
+
+          <div class="row form-group">
+            <div class="input-group col">
+              <span class="input-group-addon mt-2 mr-3">
+                <i class="fa fa-user"></i>
+              </span>
+              <input type="text" placeholder="Email Id" class="form-control" #email formControlName="email">
+            </div>
+          </div>
+          <div class="row mb-3 form-group ">
+            <div class="col text-warning" *ngIf="form.get('email').hasError('required') && form.get('email').touched">
+              Email is required
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="input-group col">
+              <span class="input-group-addon mt-2 mr-3">
+                <i class="fa fa-lock"></i>
+              </span>
+
+              <input type="password" placeholder="Password" class="form-control" #password formControlName="password">
+            </div>
+          </div>
+          <div class="row mb-3 form-group ">
+            <div class="col text-warning" *ngIf="form.get('password').hasError('required') && form.get('password').touched">
+              Password is required
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="input-group col">
+              <span class="input-group-addon mt-2 mr-3">
+                <i class="fa fa-user"></i>
+              </span>
+              <select class="form-control" #role formControlName="role">
+                <option value="Admin">Admin</option>
+                <option value="User">User</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mb-3 form-group ">
+            <div class="col text-warning" *ngIf="form.get('role').hasError('required') && form.get('role').touched">
+              Role is required
+            </div>
+          </div>
+
+          <div class="row mb-3 form-group ">
+            <div class="col text-warning" #error>
+
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <button type="submit" class="btn bg-white btn-block">Log In</button>
+          </div>
+
+          <label>
+            <input type="checkbox">Remember Me
+          </label>
+
+          <p class="text-center small">Don't have a Account!
+            <a [routerLink]="['/register']" style="text-decoration: underline">SignUp Here</a>
+          </p>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!---------------------------------------REGISTER----------------------------------------------------------------------->
+
+
+<div class="Register" *ngIf="router.url == '/register'">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="d-flex mx-auto my-auto">
+        <button type="button" class="btn text-white" (click)="userRegister()">User Register</button>
+        <button type="button" class="btn text-white" (click)="adminRegister()">Admin Register</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ======================== -->
+
+  <section *ngIf="displayUser">
+    <div class="container-fluid ">
+      <div class="border-primary ml-5">
+        <h3 class="text-center mb-5 mt-5">User Registartion</h3>
+        <div class="row">
+          <form [formGroup]="userForm" (ngSubmit)="onUserSubmit(userForm)" style="border: solid" class="mx-auto my-auto pl-5">
+
+            <div class="row form-group input-group mt-5" *ngIf="showId">
+              <div class="col-md col-12"><label for="id">Id</label></div>
+              <div class="col-md col-12">
+                <input type="text" class="form-control" disabled=true #id formControlName="id">
+              </div>
+            </div>
+
+            <div class="row form-group input-group mt-5">
+              <div class="col-md col-12"><label for="customerName">Customer name</label></div>
+              <div class="col-md col-12">
+                <input type="text" placeholder="customerName" class="form-control" #customerName formControlName="customerName">
+              </div>
+            </div>
+            <div class="row mb-3 form-group ">
+              <div class="col text-warning" *ngIf="userForm.get('customerName').hasError('required') && userForm.get('customerName').touched">
+                CustomerName is required
+              </div>
+              <div class="col text-warning" *ngIf="userForm.get('customerName').hasError('pattern')">
+                CustomerName not Valid(Only Alphabets)
+              </div>
+            </div>
+
+            <div class="row form-group input-group" *ngIf="showPass">
+              <div class="col-md col-12"><label for="password">Password</label></div>
+              <div class="col-md col-12">
+                <input type="password" placeholder="Password" class="form-control" #password formControlName="password"
+                  maxlength=8>
+              </div>
+            </div>
+            <div class="row mb-3 form-group ">
+              <div class="col text-warning" *ngIf="userForm.get('password').hasError('required') && userForm.get('password').touched">
+                Password is required
+              </div>
+              <div class="col text-warning" *ngIf="userForm.get('password').hasError('minlength')">
+                Password is not Valid
+              </div>
+            </div>
+
+            <div class="row form-group input-group" *ngIf="showRepass">
+              <div class="col-md col-12"><label for="rePassword">ReEnter Password</label></div>
+              <div class="col-md col-12">
+                <input type="password" placeholder="rePassword" class="form-control" #rePassword formControlName="rePassword"
+                  maxlength=8 (keyup)="validatePassword()">
+              </div>
+            </div>
+            <div class="row mb-3 form-group ">
+              <div class="col text-warning" *ngIf="userForm.get('rePassword').hasError('required') && userForm.get('rePassword').touched">
+                ReEnter Password is required
+              </div>
+              <div class="col text-warning" #passwordMatch>
+              </div>
+
+            </div>
+
+            <div class="row form-group input-group">
+              <div class="col-md col-12"><label for="mobile">Mobile</label></div>
+              <div class="col-md col-12">
+                <input type="text" placeholder="mobile" class="form-control" #mobile formControlName="mobile">
+              </div>
+            </div>
+            <div class="row mb-3 form-group ">
+              <div class="col text-warning" *ngIf="userForm.get('mobile').hasError('required') && userForm.get('mobile').touched">
+                Mobile Number is required
+              </div>
+              <div class="col text-warning" *ngIf="userForm.get('mobile').hasError('pattern')">
+                Mobile Number is not Valid
+              </div>
+            </div>
+
+            <div class="row form-group input-group">
+              <div class="col-md col-12"><label for="email">Email Id</label></div>
+              <div class="col-md col-12">
+                <input type="text" placeholder="Email Id" class="form-control" #email formControlName="email">
+              </div>
+            </div>
+            <div class="row mb-3 form-group ">
+              <div class="col text-warning" *ngIf="userForm.get('email').hasError('required') && userForm.get('email').touched">
+                Email is required
+              </div>
+              <div class="col text-warning" *ngIf="userForm.get('email').hasError('email')">
+                Email is not Valid
+              </div>
+            </div>
+            <div class="row mb-3 form-group ">
+              <div class="col text-warning" #errorDiv>
+              </div>
+            </div>
+
+            <div class="row form-group input-group">
+              <div class="col-md col-12"><label for="pincode">PinCode</label></div>
+              <div class="col-md col-12">
+                <input type="text" placeholder="PinCode" class="form-control" #pincode formControlName="pincode">
+              </div>
+            </div>
+
+            <div class="row form-group input-group">
+              <div class="col-md col-12"><label for="city">City</label></div>
+              <div class="col-md col-12">
+                <input type="text" placeholder="City" class="form-control" #city formControlName="city">
+              </div>
+            </div>
+
+            <div class="row form-group input-group">
+              <div class="col-md col-12"><label for="state">State</label></div>
+              <div class="col-md col-12">
+                <select class="form-control" #state formControlName="state">
+                  <option value="TamilNadu">TamilNadu</option>
+                  <option value="Andhra Pradesh">Andhra Pradesh</option>
+                  <option value="Kerla">Kerla</option>
+                  <option value="karnataka">karnataka</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row form-group input-group">
+              <div class="col-md col-12"><label for="Address">Address</label></div>
+              <div class="col-md col-12">
+                <textarea placeholder="Address" class="form-control" #address formControlName="address" rows="5" cols="70"></textarea>
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <button type="submit" class="btn text-white mx-auto">Register</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================== -->
+
+  <section *ngIf="displayAdmin">
+    <div class="container-fluid ">
+      <div class="border-primary ml-5">
+        <h3 class="text-center mb-5 mt-5">Admin Registartion</h3>
+        <div class="row">
+          <form [formGroup]="adminForm" (ngSubmit)="onAdminSubmit(adminForm)" style="border: solid" class="mx-auto my-auto pl-5">
+
+            <div class="row form-group input-group mt-5" *ngIf="showId">
+              <div class="col-md col-12"><label for="id">Id</label></div>
+              <div class="col-md col-12">
+                <input type="text" class="form-control" disabled=true #id formControlName="id">
+              </div>
+            </div>
+
+            <div class="row form-group input-group mt-5">
+              <div class="col-md col-12"><label for="dealerName">DealerName</label></div>
+              <div class="col-md col-12">
+                <input type="text" placeholder="DealerName" class="form-control" #dealerName formControlName="dealerName">
+              </div>
+            </div>
+            <div class="row mb-3 form-group ">
+              <div class="col text-warning" *ngIf="adminForm.get('dealerName').hasError('required') && adminForm.get('dealerName').touched">
+                DealerName is required
+              </div>
+              <div class="col text-warning" *ngIf="adminForm.get('dealerName').hasError('pattern')">
+                DealerName not Valid
+              </div>
+            </div>
+
+            <div class="row form-group input-group">
+              <div class="col-md col-12"><label for="serviceCenterName">ServiceCenterName</label></div>
+              <div class="col-md col-12">
+                <input type="text" placeholder="ServiceCenterName" class="form-control" #serviceCenterName
+                  formControlName="serviceCenterName">
+              </div>
+            </div>
+            <div class="row mb-3 form-group ">
+              <div class="col text-warning" *ngIf="adminForm.get('serviceCenterName').hasError('required') && adminForm.get('serviceCenterName').touched">
+                serviceCenterName is required
+              </div>
+              <div class="col text-warning" *ngIf="adminForm.get('serviceCenterName').hasError('pattern')">
+                serviceCenterName not Valid
+              </div>
+            </div>
+
+            <div class="row form-group input-group" *ngIf="showPass">
+              <div class="col-md col-12"><label for="password">Password</label></div>
+              <div class="col-md col-12">
+                <input type="password" placeholder="Password" class="form-control" #password formControlName="password"
+                  maxlength=8>
+              </div>
+            </div>
+            <div class="row mb-3 form-group ">
+              <div class="col text-warning" *ngIf="adminForm.get('password').hasError('required') && adminForm.get('password').touched">
+                Password is required
+              </div>
+              <div class="col text-warning" *ngIf="adminForm.get('password').hasError('pattern') && adminForm.get('rePassword').hasError('minlength')">
+                Password is not Valid
+              </div>
+            </div>
+
+            <div class="row form-group input-group" *ngIf="showRepass">
+              <div class="col-md col-12"><label for="rePassword">ReEnter Password</label></div>
+              <div class="col-md col-12">
+                <input type="password" placeholder="ReEnterPassword" class="form-control" #rePassword formControlName="rePassword"
+                  maxlength=8 (keyup)="validatePassword()">
+              </div>
+            </div>
+            <div class="row mb-3 form-group ">
+              <div class="col text-warning" *ngIf="adminForm.get('rePassword').hasError('required') && adminForm.get('rePassword').touched">
+                RePassword is required
+              </div>
+              <div class="col text-warning" #passwordMatch>
+              </div>
+            </div>
+
+            <div class="row form-group input-group">
+              <div class="col-md col-12"><label for="mobile">Mobile</label></div>
+              <div class="col-md col-12">
+                <input type="text" placeholder="Mobile" class="form-control" #mobile formControlName="mobile">
+              </div>
+            </div>
+            <div class="row mb-3 form-group ">
+              <div class="col text-warning" *ngIf="adminForm.get('mobile').hasError('required') && adminForm.get('mobile').touched">
+                Mobile Number is required
+              </div>
+              <div class="col text-warning" *ngIf="adminForm.get('mobile').hasError('pattern')">
+                Mobile Number is not Valid
+              </div>
+            </div>
+
+            <div class="row form-group input-group">
+              <div class="col-md col-12"><label for="email">Email Id</label></div>
+              <div class="col-md col-12">
+                <input type="text" placeholder="Email Id" class="form-control" #email formControlName="email">
+              </div>
+            </div>
+            <div class="row mb-3 form-group ">
+              <div class="col text-warning" *ngIf="adminForm.get('email').hasError('required') && adminForm.get('email').touched">
+                Email is required
+              </div>
+              <div class="col text-warning" *ngIf="adminForm.get('email').hasError('email')">
+                Email is not Valid
+              </div>
+            </div>
+            <div class="row mb-3 form-group ">
+              <div class="col text-warning" #errorDiv>
+              </div>
+            </div>
+
+            <div class="row form-group input-group">
+              <div class="col-md col-12"><label for="pincode">PinCode</label></div>
+              <div class="col-md col-12">
+                <input type="text" placeholder="PinCode" class="form-control" #pincode formControlName="pincode">
+              </div>
+            </div>
+
+            <div class="row form-group input-group">
+              <div class="col-md col-12"><label for="city">City</label></div>
+              <div class="col-md col-12">
+                <input type="text" placeholder="City" class="form-control" #city formControlName="city">
+              </div>
+            </div>
+
+            <div class="row form-group input-group">
+              <div class="col-md col-12"><label for="state">State</label></div>
+              <div class="col-md col-12">
+                <select class="form-control" #state formControlName="state">
+                  <option value="TamilNadu">TamilNadu</option>
+                  <option value="AndhraPradesh">Andhra Pradesh</option>
+                  <option value="Kerla">Kerla</option>
+                  <option value="karnataka">karnataka</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row form-group input-group">
+              <div class="col-md col-12"><label for="Address">Address</label></div>
+              <div class="col-md col-12">
+                <textarea placeholder="Address" class="form-control" #address formControlName="address" rows="3" cols="70"></textarea>
+              </div>
+            </div>
+            <div class="row mb-3 form-group ">
+              <div class="col text-warning" *ngIf="adminForm.get('email').hasError('required') && adminForm.get('email').touched">
+                Address is required
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <button type="submit" class="btn text-white mx-auto">Register</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!--------------------------------------Services-------------------------------------------------------------------->
+
+<div class="Services" *ngIf="router.url =='/service'">
+  <div class="container mt-5">
+    <p>We understand the importance of your time and pain that you
+      undergo to get your car serviced, to make your life easy The Motorman
+      services you cars assuring low costs while maintaining quality standards.
+      You will no longer have to pay extra due to lack of knowledge or the car service
+      provider up-selling vehicle parts / services.</p>
+
+    <p class="display-4">Night Services (10 pm - 8 am)</p>
+
+    <p>The first and only company offering night servicing for vehicles in India<p>
+
+        <p class="display-4">Day Services (8 am - 10 pm)</p>
+
+        <p>We are available even during the day hours!
+          The list of our day services are suited for any of your car
+          service or repair needs. Not only we do the service and repairs we also
+          provide car care and other services to offer convenience in all aspects.</p>
+
+        <p class="display-4">Periodic Car Servicing</p>
+
+        <p> The Car Service Center is the first automotive service provider in India that
+          operates in night hours, we work round the clock to give you a smooth driving
+          experience. You can easily book a service request through our website to avail the night
+          service before 2 pm, the car will be picked by us before 10 pm the same day after which we
+          assess and share the service estimate.</p>
+
+        <p>The service will start upon price confirmation.
+          Once the service is complete we will drop the car to your location,
+          or you can pick it from the service station. At few service stations,
+          we currently don't offer pressure wash during night hours due to logistics issues
+          however we are working on this to further enhance your experience, our representative
+          will let you know if pressure wash is unavailable.</p>
+
+
+  </div>
+  <div class="container">
+    <div class="display-4"> Full Services</div>
+    <div class="row mb-5 justify-content-center">
+      <div id="carousel" class="carousel slide" data-ride="carousel">
+
+        <ul class="carousel-indicators">
+          <li data-target="#carousel" data-slide-to="0" class="active"></li>
+          <li data-target="#carousel" data-slide-to="1"></li>
+          <li data-target="#carousel" data-slide-to="2"></li>
+        </ul>
+
+        <div class="col carousel-inner ">
+          <div class="carousel-item active">
+            <img src="assets/images/wipe.jpg" class="img" alt="Wipe Blade Installation">
+            <div class="carousel-caption">
+              <h3 class="text-white">Wipe Blade Installation</h3>
+            </div>
+          </div>
+          <div class="col carousel-item">
+            <img src="assets/images/oil.jpg" class="img" alt="Oil Change">
+            <div class="carousel-caption">
+              <h3 class="text-white">Oil Change</h3>
+            </div>
+          </div>
+          <div class="col carousel-item">
+            <img src="assets/images/pack.jpg" class="img" alt="Packaged Car Service">
+            <div class="carousel-caption">
+              <h3 class="text-white">Packaged Car Service</h3>
+            </div>
+          </div>
+          <div class="col carousel-item">
+            <img src="assets/images/wheel.jpg" class="img" alt="Wheel Alignment">
+            <div class="carousel-caption">
+              <h3 class="text-white">Wheel Alignment</h3>
+            </div>
+          </div>
+          <div class="col carousel-item">
+            <img src="assets/images/headlight.jpg" class="img" alt="Head Light Restoration">
+            <div class="carousel-caption">
+              <h3 class="text-white">Head Light Restoration</h3>
+            </div>
+          </div>
+          <div class="col carousel-item">
+            <img src="assets/images/steering.jpg" class="img" alt="Steering and Suspension">
+            <div class="carousel-caption">
+              <h3 class="text-white">Steering and Suspension</h3>
+            </div>
+          </div>
+          <div class="col carousel-item">
+            <img src="assets/images/carbattery.jpg" class="img" alt="Car batteries">
+            <div class="carousel-caption">
+              <h3 class="text-white">Car batteries</h3>
+            </div>
+          </div>
+        </div>
+
+        <a class="carousel-control-prev" href="#carousel" data-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#carousel" data-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </a>
+
+      </div>
+    </div>
+  </div>
+</div>

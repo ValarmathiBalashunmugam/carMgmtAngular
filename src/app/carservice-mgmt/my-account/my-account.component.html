@@ -1,0 +1,96 @@
+<app-header></app-header>
+<div class="MyAccount" *ngIf="authService.isAdmin()">
+  <section class="container mt-5 text-center">
+    <h3 class="text-center">My Account</h3>
+    <table class="table table-responsive table-hover table-bordered">
+
+      <tbody class="text-white bg-color">
+        <tr>
+          <td>AdminId</td>
+          <td>{{admin.id}}</td>
+        </tr>
+        <tr>
+          <td>DealerName</td>
+          <td>{{admin.dealerName}}</td>
+        </tr>
+        <tr>
+          <td>ServiceCenterName</td>
+          <td>{{admin.dealerName}}</td>
+        </tr>
+
+        <td>Contact Number</td>
+        <td>{{admin.mobile}}</td>
+        <tr>
+        <tr>
+          <td>Email</td>
+          <td>{{admin.email}}</td>
+        <tr>
+        <tr>
+          <td>Pincode</td>
+          <td>{{admin.pincode}}</td>
+        <tr>
+        <tr>
+          <td>City</td>
+          <td>{{admin.city}}</td>
+        <tr>
+        <tr>
+          <td>State</td>
+          <td>{{admin.state}}</td>
+        <tr>
+        <tr>
+          <td>Address</td>
+          <td>{{admin.address}}</td>
+        <tr>
+      </tbody>
+      <!-- <div class="text-center mt-5 mb-5">
+        <button (click)=editAdmin(admin.id) class="btn text-white">Edit</button>
+      </div> -->
+    </table>
+  </section>
+</div>
+
+
+<div class="user"  *ngIf="authService.isUser()">
+  <section class="container mt-5 text-center">
+    <h3 class="text-center">User Account</h3>
+    <table class="table table-responsive table-hover table-bordered">
+      <tbody class="text-white bg-color">
+        <tr>
+          <td>CustomerId</td>
+          <td>{{myAccount.id}}</td>
+        </tr>
+        <tr>
+          <td>CustomerName</td>
+          <td>{{myAccount.customerName}}</td>
+        </tr>
+
+        <td>Contact Number</td>
+        <td>{{myAccount.mobile}}</td>
+        <tr>
+        <tr>
+          <td>Email</td>
+          <td>{{myAccount.email}}</td>
+        <tr>
+        <tr>
+          <td>Pincode</td>
+          <td>{{myAccount.pincode}}</td>
+        <tr>
+        <tr>
+          <td>City</td>
+          <td>{{myAccount.city}}</td>
+        <tr>
+        <tr>
+          <td>State</td>
+          <td>{{myAccount.state}}</td>
+        <tr>
+        <tr>
+          <td>Address</td>
+          <td>{{myAccount.address}}</td>
+        <tr>
+      </tbody>
+      <!-- <div class="text-center mt-5 mb-5">
+        <button (click)=editUser(myAccount.id) class="btn text-white">Edit</button>
+      </div> -->
+    </table>
+  </section>
+</div>

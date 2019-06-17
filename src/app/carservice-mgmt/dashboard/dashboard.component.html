@@ -1,0 +1,37 @@
+<app-header></app-header>
+<div class="userDashBoard"  *ngIf="router.url=='/dashboard'">
+  <h4 class="text-muted mb-5">Welcome To the DashBoard</h4>
+  <div class="container">
+    <div class="row mb-3">
+      <a [routerLink]="['/welcome']" class="btn text-white btn-block text-left">Home</a>
+    </div>
+    <div class="row mb-3 ">
+      <a [routerLink]="['/serviceCenter/centerList']" class="btn text-white btn-block text-left">Search Service Center</a>
+    </div>
+    <div class="row mb-3 " *ngIf=authService.isUser()>
+      <a [routerLink]="['/bill/myBill']" class="btn text-white btn-block text-left" >My Bill</a>
+    </div>
+    <div class="row mb-3" *ngIf=authService.isUser()>
+      <a [routerLink]="['/pickUp/myOrder']" class="btn text-white btn-block text-left" >My Orders</a>
+    </div>
+    <div class="row mb-3" *ngIf=authService.isLoggedIn()>
+      <a [routerLink]="['/myAccount']" class="btn text-white btn-block text-left" >My Account</a>
+    </div>
+    <div class="row mb-3" *ngIf=authService.isAdmin()>
+      <a [routerLink]="['/bill/generateBill']" class="btn text-white btn-block text-left" >Add Bill</a>
+    </div>
+    <div class="row mb-3" *ngIf=authService.isAdmin()>
+      <a [routerLink]="['/pickUp/customerReport']" class="btn text-white btn-block text-left" >Customer Report</a>
+    </div>
+    <div class="row mb-3" *ngIf=authService.isAdmin()>
+      <a [routerLink]="['/bill/billReport']" class="btn text-white btn-block text-left" >Bill Report</a>
+    </div>
+    <!-- <div class="row mb-3" *ngIf=authService.isLoggedIn()>
+      <a [routerLink]="['/changePassword']" class="btn text-white btn-block text-left" >Change Password</a>
+    </div> -->
+    <div class="row mb-3"  *ngIf=authService.isLoggedIn()>
+        <a class="btn text-white btn-block text-left" (click)=logout()>Logout</a>
+    </div>
+  </div>
+</div>
+

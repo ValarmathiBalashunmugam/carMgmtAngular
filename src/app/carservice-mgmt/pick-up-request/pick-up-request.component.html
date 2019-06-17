@@ -1,0 +1,192 @@
+<app-header></app-header>
+<div class="myOrder" *ngIf="router.url=='/pickUp/myOrder'">
+
+  <section class="container mt-5 text-center">
+    <h3 class="text-center">Order</h3>
+    <table class="table table-responsive table-hover table-bordered ">
+      <thead style=" background-color:rgb(74,80,110);" class="text-white">
+        <tr>
+          <th>OrderId</th>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Email</th>
+          <th>Contact Number</th>
+          <th>Address</th>
+          <th>TimeSlot</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody class="bg-light">
+        <tr *ngFor="let myOrder of myOrderList">
+          <td style="color:rgb(74,80,110);" class="font-weight-bold">{{myOrder.id}}</td>
+          <td>{{myOrder.name}}</td>
+          <td style="color:rgb(74,80,110);" class="font-weight-bold">{{myOrder.status}}</td>
+          <td>{{myOrder.email}}</td>
+          <td>{{myOrder.mobile}}</td>
+          <td>{{myOrder.address}}</td>
+          <td>{{myOrder.timeSlot}}</td>
+          <td *ngIf="checkStatus(myOrder.status)"><a (click)=editOrder(myOrder.id) class="btn text-white">Edit</a>
+        <tr>
+      </tbody>
+    </table>
+  </section>
+</div>
+
+
+<!-- ============================PICKUP FORM================================ -->
+<div class="pickUpForm" *ngIf="router.url=='/pickUp/pickUpForm' || router.url=='/pickUp/editOrder'">
+  <div class="container-fluid ">
+    <div class="border-primary ml-5">
+      <h3 class="text-center mb-5 mt-5">PickUp Form</h3>
+      <div class="row">
+        <form [formGroup]="pickUpForm" (ngSubmit)="onUserSubmit(pickUpForm)" style="border: solid" class="mx-auto my-auto pl-5">
+
+          <div class="row form-group input-group mt-5">
+            <input type="text" class="form-control" #status formControlName="status" style="display: none">
+          </div>
+
+          <div class="row form-group input-group mt-5" *ngIf="displayId">
+            <div class="col-md col-12"><label for="id">Id</label></div>
+            <div class="col-md col-12">
+              <input type="text" placeholder="Id" class="form-control" #id formControlName="id">
+            </div>
+          </div>
+
+          <div class="row form-group input-group mt-5">
+            <div class="col-md col-12"><label for="name">Name</label></div>
+            <div class="col-md col-12">
+              <input type="text" placeholder="Name" class="form-control" #name formControlName="name">
+            </div>
+          </div>
+          <div class="row mb-3 form-group ">
+            <div class="col text-warning" *ngIf="pickUpForm.get('name').hasError('required') && pickUpForm.get('name').touched">
+              Name is required
+            </div>
+            <div class="col text-warning" *ngIf="pickUpForm.get('name').hasError('pattern')">
+              Name not Valid
+            </div>
+          </div>
+
+          <div class="row form-group input-group">
+            <div class="col-md col-12"><label for="email">Email Id</label></div>
+            <div class="col-md col-12">
+              <input type="text" placeholder="Email Id" readOnly class="form-control" #email formControlName="email">
+            </div>
+          </div>
+          <div class="row mb-3 form-group ">
+            <div class="col text-warning" *ngIf="pickUpForm.get('email').hasError('required') && pickUpForm.get('email').touched">
+              Email is required
+            </div>
+            <div class="col text-warning" *ngIf="pickUpForm.get('email').hasError('email')">
+              Email is not Valid
+            </div>
+          </div>
+
+          <div class="row form-group input-group">
+            <div class="col-md col-12"><label for="timeSlot">TimeSlot</label></div>
+            <div class="col-md col-12">
+              <select class="form-control" #timeSlot formControlName="timeSlot">
+                <option value="12am-4am">12am-4am</option>
+                <option value="4am-1pm">4am-1pm</option>
+                <option value="1pm-10pm">1pm-10pm</option>
+                <option value="10pm-12am">10pm-12am</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- <div class="row form-group input-group">
+            <div class="col-md col-12"><label for="Service">Service</label></div>
+            <div class="col-md col-12">
+              <div class="radio">
+                <label><input type="radio" name="optradio" checked>Option 1</label>
+              </div>
+              <div class="radio">
+                <label><input type="radio" name="optradio">Option 2</label>
+              </div>
+              <div class="radio disabled">
+                <label><input type="radio" name="optradio" disabled>Option 3</label>
+              </div>
+            </div>
+          </div>  -->
+
+
+          <div class="row form-group input-group">
+            <div class="col-md col-12"><label for="mobile">Mobile</label></div>
+            <div class="col-md col-12">
+              <input type="text" placeholder="mobile" class="form-control" #mobile formControlName="mobile">
+            </div>
+          </div>
+          <div class="row mb-3 form-group ">
+            <div class="col text-warning" *ngIf="pickUpForm.get('mobile').hasError('required') && pickUpForm.get('mobile').touched">
+              Mobile Number is required
+            </div>
+            <div class="col text-warning" *ngIf="pickUpForm.get('mobile').hasError('pattern')">
+              Mobile Number is not Valid
+            </div>
+          </div>
+
+          <div class="row form-group input-group">
+            <div class="col-md col-12"><label for="Address">PickUpAddress</label></div>
+            <div class="col-md col-12">
+              <textarea placeholder="Address" class="form-control" #address formControlName="address" rows="3" cols="70"></textarea>
+            </div>
+          </div>
+          <div class="row mb-3 form-group ">
+            <div class="col text-warning" *ngIf="pickUpForm.get('email').hasError('required') && pickUpForm.get('email').touched">
+              Address is required
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <button type="submit" class="btn text-white mx-auto">Request</button>
+          </div>
+
+          <div class="row form-group input-group mt-5">
+            <input type="text" class="form-control" #dealerEmail formControlName="dealerEmail" style="display: none">
+          </div>
+
+          <div class="row mb-3 form-group font-weight-700 text-center">
+            <div class="col text-warning" #msg></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ====================================================================== -->
+
+<div class="customerReport" *ngIf="router.url=='/pickUp/customerReport'">
+  <div class="container mt-5">
+    <h3 class="text-center mb-5">Customer Report</h3>
+    <div class="text-center">
+      <table class="table table-responsive table-hover table-bordered">
+        <thead style=" background-color:rgb(74,80,110);" class="text-white">
+          <tr>
+            <th>Id</th>
+            <th>User Email</th>
+            <th>Mobile</th>
+            <th>Address</th>
+            <th>TimeSlot</th>
+            <th>Status</th>
+            <th >Action</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody class="bg-light">
+          <tr *ngFor="let pickUp of pickUpList">
+            <td style="color:rgb(74,80,110);" class="font-weight-bold">{{pickUp.id}}</td>
+            <td>{{pickUp.name}}</td>
+            <td>{{pickUp.mobile}}</td>
+            <td>{{pickUp.address}}</td>
+            <td>{{pickUp.timeSlot}}</td>
+            <td>{{pickUp.status}}</td>
+            <td *ngIf="pickUpStatus(pickUp.status)"><button (click)=accept(pickUp.id) class="btn text-white">Accept</button></td>
+            <td *ngIf="pickUpStatus(pickUp.status)"><button (click)=reject(pickUp.id) class="btn text-white">Reject</button></td>
+          </tr>
+          <div #res></div>
+        </tbody>
+      </table>
+    </div>
+  </div>
